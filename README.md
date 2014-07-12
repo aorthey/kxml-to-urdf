@@ -3,7 +3,7 @@ kxml to urdf converter
 
 supports box tags only
 
-usage: parser <kxml filename> 
+usage: parser < kxml filename > 
 
 Example
 
