@@ -1,7 +1,13 @@
 kxml to urdf converter
+================
 
- box tags only
+supports box tags only
 
+usage: parser <kxml filename> 
 
+Example
+
+    python parser.py room.kxml
+    
 
 
