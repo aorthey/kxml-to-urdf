@@ -14,7 +14,7 @@ print "Converting "+kxml_fname+" to "+urdf_fname
 
 ## header for URDF
 soup = BeautifulSoup(open(kxml_fname))
-fh = open('env.urdf','w')
+fh = open(urdf_fname,'w')
 fh.write('<?xml version="1.0"?>\n')
 fh.write('<robot name="wall_description">\n')
 
