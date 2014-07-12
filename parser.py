@@ -54,6 +54,11 @@ for i in range(0,len(boxes)):
   strL += '    <color rgba="%f %f %f %f"/>\n' % (r,g,b,a)
   strL += '  </material>\n'
   strL += '  </visual>\n'
+  strL += '  <collision>\n'
+  strL += '    <geometry>\n'
+  strL += '      <box size="%f %f %f"/>\n' % (sx,sy,sz)
+  strL += '    </geometry>\n'
+  strL += '  </collision>\n'
   strL += '</link>\n'
   fh.write(strL)
 
