@@ -16,7 +16,18 @@ print "Converting "+kxml_fname+" to "+urdf_fname
 soup = BeautifulSoup(open(kxml_fname))
 fh = open(urdf_fname,'w')
 fh.write('<?xml version="1.0"?>\n')
-fh.write('<robot name="wall_description">\n')
+fh.write('<robot name="wall_description">\n\n')
+
+## create base link
+strL  = '  <link name="base_link">\n'
+strL += '    <visual>\n'
+strL += '      <geometry>\n'
+strL += '        <box size="0 0 0"/>\n'
+strL += '      </geometry>\n'
+strL += '    <origin rpy="0 0 0" xyz="0 0 0"/>\n'
+strL += '    </visual>\n'
+strL += '  </link>\n\n'
+fh.write(strL)
 
 boxes = soup.scene.geometry_node.assembly.findAll("box")
 
@@ -44,24 +55,29 @@ for i in range(0,len(boxes)):
   b = float(color[2])
   a = float(color[3])
 
-  strL = '<link name="box%d">\n' % (bid)
-  strL += '  <visual>\n'
-  strL += '    <geometry>\n'
-  strL += '      <box size="%f %f %f"/>\n' % (sx,sy,sz)
-  strL += '    </geometry>\n'
-  strL += '  <origin rpy="0 0 0" xyz="%f %f %f"/>\n' % (x,y,z)
-  strL += '  <material name="wall_colored">\n'
-  strL += '    <color rgba="%f %f %f %f"/>\n' % (r,g,b,a)
-  strL += '  </material>\n'
-  strL += '  </visual>\n'
-  strL += '  <collision>\n'
-  strL += '    <geometry>\n'
-  strL += '      <box size="%f %f %f"/>\n' % (sx,sy,sz)
-  strL += '    </geometry>\n'
-  strL += '  </collision>\n'
-  strL += '</link>\n'
+  strL  = '  <link name="box%d">\n' % (bid)
+  strL += '    <visual>\n'
+  strL += '      <geometry>\n'
+  strL += '        <box size="%f %f %f"/>\n' % (sx,sy,sz)
+  strL += '      </geometry>\n'
+  strL += '    <origin rpy="0 0 0" xyz="%f %f %f"/>\n' % (x,y,z)
+  strL += '    <material name="wall_colored">\n'
+  strL += '      <color rgba="%f %f %f %f"/>\n' % (r,g,b,a)
+  strL += '    </material>\n'
+  strL += '    </visual>\n'
+  strL += '    <collision>\n'
+  strL += '      <geometry>\n'
+  strL += '        <box size="%f %f %f"/>\n' % (sx,sy,sz)
+  strL += '      </geometry>\n'
+  strL += '    </collision>\n'
+  strL += '  </link>\n\n'
   fh.write(strL)
 
+  strJ  = '  <joint name="base_to_box%d" type="fixed">\n' % (bid)
+  strJ += '    <parent link="base_link"/>\n'
+  strJ += '    <child link="box%d"/>\n' % (bid)
+  strJ += '  </joint>\n\n'
+  fh.write(strJ)
 #FOOTER
 fh.write('</robot>\n')
 print "Output written to "+urdf_fname
