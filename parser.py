@@ -69,6 +69,7 @@ for i in range(0,len(boxes)):
   strL += '      <geometry>\n'
   strL += '        <box size="%f %f %f"/>\n' % (sx,sy,sz)
   strL += '      </geometry>\n'
+  strL += '    <origin rpy="0 0 0" xyz="%f %f %f"/>\n' % (x,y,z)
   strL += '    </collision>\n'
   strL += '  </link>\n\n'
   fh.write(strL)
